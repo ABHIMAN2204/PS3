@@ -72,7 +72,7 @@ function maximize_urea_production(time_start,time_stop,time_step)
 		0.923*0.99*1	;	# 1 M_ATP_c+M_L-Citrulline_c+M_L-Aspartate_c --> M_AMP_c+M_Diphosphate_c+M_N-(L-Arginino)succinate_c
 		1	            ;	# 2 M_N-(L-Arginino)succinate_c --> M_Fumarate_c+M_L-Arginine_c
 		0.142*1	      ; # 3 M_L-Arginine_c+M_H2O_c --> M_L-Ornithine_c+M_Urea_c
-		0.0117*1	    ; # 4 M_Carbamoyl_phosphate_c+M_L-Ornithine_c --> M_Orthophosphate_c+M_L-Citrulline_c
+		1*1	    ; # 4 M_Carbamoyl_phosphate_c+M_L-Ornithine_c --> M_Orthophosphate_c+M_L-Citrulline_c
 		 0.986*1      ; # 5 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c --> 2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c
 		1             ; #6  2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c --> 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c
 	];
@@ -136,7 +136,7 @@ function DataDictionary(time_start,time_stop,time_step)
 			0.923*0.99*1	;	# 1 M_ATP_c+M_L-Citrulline_c+M_L-Aspartate_c --> M_AMP_c+M_Diphosphate_c+M_N-(L-Arginino)succinate_c
 			1	            ;	# 2 M_N-(L-Arginino)succinate_c --> M_Fumarate_c+M_L-Arginine_c
 			0.142*1	      ; # 3 M_L-Arginine_c+M_H2O_c --> M_L-Ornithine_c+M_Urea_c
-			0.0117*1	    ; # 4 M_Carbamoyl_phosphate_c+M_L-Ornithine_c --> M_Orthophosphate_c+M_L-Citrulline_c
+			1*1	    ; # 4 M_Carbamoyl_phosphate_c+M_L-Ornithine_c --> M_Orthophosphate_c+M_L-Citrulline_c
 			 0.986*1      ; # 5 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c --> 2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c
 			1             ; #6  2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c --> 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c
 		];
