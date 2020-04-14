@@ -65,16 +65,27 @@ function maximize_urea_production(time_start,time_stop,time_step)
 	# don't allow water exchange -
 	default_flux_bounds_array[20,2] = 0
 	default_flux_bounds_array[21,2] = 0
+	#set up (s/s+Km) value array from Park et al. Supplementary doc 2
+
+	s= [
+
+		0.923*0.99*1	;	# 1 M_ATP_c+M_L-Citrulline_c+M_L-Aspartate_c --> M_AMP_c+M_Diphosphate_c+M_N-(L-Arginino)succinate_c
+		1	            ;	# 2 M_N-(L-Arginino)succinate_c --> M_Fumarate_c+M_L-Arginine_c
+		0.142*1	      ; # 3 M_L-Arginine_c+M_H2O_c --> M_L-Ornithine_c+M_Urea_c
+		0.0117*1	    ; # 4 M_Carbamoyl_phosphate_c+M_L-Ornithine_c --> M_Orthophosphate_c+M_L-Citrulline_c
+		 0.986*1      ; # 5 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c --> 2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c
+		1             ; #6  2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c --> 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c
+	];
 
 	# we have some specific values for v1 -> v5
 	E = (0.01)*(1/1000)	# mmol/gDW
 	metabolic_vmax_array = [
-		203*(3600)*E	;	# v1 ec:6.3.4.5 mmol/gDW-hr
-		34.5*(3600)*E	;	# v2 ec:4.3.2.1 mmol/gDW-hr
-		249*(3600)*E	;	# v3 ec:3.5.3.1 mmol/gDW-hr
-		88.1*(3600)*E	;	# v4 ec:2.1.3.3 mmol/gDW-hr
-		13.7*(3600)*E	;	# v5 ec:1.14.13.39 mmol/gDW-hr
-		13.7*(3600)*E	;	# v6 ec:1.14.13.39 mmol/gDW-hr
+		203*(3600)*E*s[1]	;	# v1 ec:6.3.4.5 mmol/gDW-hr
+		34.5*(3600)*E*s[2]	;	# v2 ec:4.3.2.1 mmol/gDW-hr
+		249*(3600)*E*s[3]	;	# v3 ec:3.5.3.1 mmol/gDW-hr
+		88.1*(3600)*E*s[4]	;	# v4 ec:2.1.3.3 mmol/gDW-hr
+		13.7*(3600)*E*s[5]	;	# v5 ec:1.14.13.39 mmol/gDW-hr
+		13.7*(3600)*E*s[6]	;	# v6 ec:1.14.13.39 mmol/gDW-hr
 	]
 	range_of_cycle_reactions = collect(1:6)
 	for reaction_index in range_of_cycle_reactions
@@ -143,21 +154,21 @@ function DataDictionary(time_start,time_stop,time_step)
 		0	metabolic_vmax_array[5]	;	# Vmax [mmol/gdw-hr] 5	2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c --> 2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c
 		0	metabolic_vmax_array[6]	;	# Vmax [mmol/gdw-hr] 6	2.0*M_Nitric_oxide_c+2.0*M_L-Citrulline_c+3.0*M_NADP_c+4.0*M_H2O_c --> 2.0*M_L-Arginine_c+4.0*M_Oxygen_c+3.0*M_NADPH_c+3.0*M_H_c
 
-		0	10	;	# Vmax [mmol/gdw-hr] 7	[] --> M_Carbamoyl_phosphate_c
-		0	10	;	# Vmax [mmol/gdw-hr] 8	[] --> M_L-Aspartate_c
-		0	10	;	# Vmax [mmol/gdw-hr] 9	M_Fumarate_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 10	M_Urea_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 11	[] --> M_ATP_c
-		0	10	;	# Vmax [mmol/gdw-hr] 12	M_AMP_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 13	M_Diphosphate_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 14	M_Orthophosphate_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 15	[] --> M_NADPH_c
-		0	10	;	# Vmax [mmol/gdw-hr] 16	[] --> M_H_c
-		0	10	;	# Vmax [mmol/gdw-hr] 17	[] -->  M_Oxygen_c
-		0	10	;	# Vmax [mmol/gdw-hr] 18	M_Nitric_oxide_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 19	M_NADP_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 20	M_H2O_c --> []
-		0	10	;	# Vmax [mmol/gdw-hr] 21	[] --> M_H2O_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 7	[] --> M_Carbamoyl_phosphate_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 8	[] --> M_L-Aspartate_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 9	M_Fumarate_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 10	M_Urea_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 11	[] --> M_ATP_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 12	M_AMP_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 13	M_Diphosphate_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 14	M_Orthophosphate_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 15	[] --> M_NADPH_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 16	[] --> M_H_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 17	[] -->  M_Oxygen_c
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 18	M_Nitric_oxide_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 19	M_NADP_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 20	M_H2O_c --> []
+		0	2.2148976	;	# Vmax [mmol/gdw-hr] 21	[] --> M_H2O_c
 	];
 
 
